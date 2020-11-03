@@ -24,7 +24,8 @@
                         <field name="abu_gharib_arrival_Date"/>
                         <field name="abu_gharib_departure_Date"/>
                         <field name="poe"/>
-                        <field name="licenses" widget="many2many_tags" options="{'no_create': True, 'no_create_edit':True}"/>
+                        <field name="cleaning_co"/>
+                        
                     </group>
                     <group name="documents" string="Documents">
                         <field name="legalized_docs_recieved"/>
@@ -35,6 +36,7 @@
                     </group>
                     <group name="financial_details" string="Financial Details">
                         <field name="admin_expenses"/>
+                        <field name="shipment_value"/>
                         <field name="admin_expenses_date"/>
                         <field name="tc_invoice_number"/>
                         <field name="tc_invoice_date"/>
@@ -52,10 +54,17 @@
                             <field name="rel_purchase_orders" widget="many2many_tags"/>
                             <field name="rel_products" widget="many2many_tags"/>
                             <field name="warehouse_arr_dates" widget="many2many_tags"/>
+                            <field name="licenses" widget="many2many_tags" options="{'no_create': True, 'no_create_edit':True}"/>
                         </tree>
                 </field>
             </sheet>
+            <div class="oe_chatter">
+                <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                <field name="message_ids" widget="mail_thread"/>
+            </div>
+
         </form>
+            
         </field>
         </record>
 

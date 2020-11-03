@@ -5,6 +5,7 @@ from odoo.exceptions import UserError
 
 class Shipment(models.Model):
     _name="shipment.shipment"
+    _inherit = 'mail.thread'
     _rec_name="partner_id"
     """ Logistic Details """
     partner_id = fields.Many2one("res.partner",string="Vendor",required=True)
@@ -20,7 +21,7 @@ class Shipment(models.Model):
     abu_gharib_departure_Date = fields.Date(string="Abu Gharib Departure Date")
     cleaning_co = fields.Char(string="Cleaning Company")
     poe = fields.Many2one('shipment.poe', string='Port of Entry')
-    licenses = fields.Many2many("license.license",string="Related Licenses")
+    
 
     
 
@@ -35,7 +36,7 @@ class Shipment(models.Model):
     customs_paid = fields.Float(string="Customs Paid")
     total = fields.Float(string="Total")
     total_percentage = fields.Float(string="Total Percentage")
-
+    shipment_value = fields.Float(string="Shipment Value")
 
 
     state=fields.Selection([("draft","Draft"),("upcoming","Upcoming"),("at airport now","At airpot now"),("arrived in w.h + paid inv.","Arrived in W.H. + paid inv."),("cancelled","Cancelled")],string="Status",default="draft",required=True)
@@ -46,14 +47,7 @@ class Shipment(models.Model):
     
     purchase_proxy = fields.Many2many(comodel_name="purchase.order",relation="proxy_purchase_rel",column1="pur_pro",cloumn2="pro_pur",string="Purchase Orders",related="shipment_line.rel_purchase_orders")
 
-
-
     
-
-
-
-
-
 
     def escalate(self):
         if self.state =="draft":
@@ -79,6 +73,7 @@ class ShipmentInvoices(models.Model):
     rel_purchase_orders = fields.Many2many(comodel_name="purchase.order",relation="shipment_purchase_rel",column1="shipment_pur",column2="pur_shipment",string="Purchase Orders")
     rel_products = fields.Many2many(comodel_name="product.product",relation="shipment_product_rel",column1="shipment_pro",column2="pro_shipment",string="Related Products")
     warehouse_arr_dates = fields.Many2many(comodel_name="shipment.dates",relation="shipment_dates_rel",column1="shipment_dates",column2="dates_shipment",string="Warehouse Arrival Dates")
+    licenses = fields.Many2many("license.license",string="Related Licenses")
 
 
 
@@ -86,9 +81,6 @@ class ShipmentLineDates(models.Model):
     _name="shipment.dates"
     _rec_name = "date"
     date = fields.Date(string="Date")
-
-
-
 
 
 class ShipmentPoe(models.Model):
