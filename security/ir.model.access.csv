@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_shipment_management_shipment_management,shipment_management.shipment_management,model_shipment_shipment,base.group_user,1,1,1,1
+access_shipment_management_shipment_invoice,shipment_management.shipment_invoice,model_shipment_invoice,base.group_user,1,1,1,1
+
