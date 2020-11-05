@@ -21,6 +21,9 @@ class Shipment(models.Model):
     abu_gharib_departure_Date = fields.Date(string="Abu Gharib Departure Date")
     cleaning_co = fields.Char(string="Cleaning Company")
     poe = fields.Many2one('shipment.poe', string='Port of Entry')
+    attachment_ids = fields.Many2many('ir.attachment', string='Attachments')
+
+
     
 
     

@@ -26,10 +26,12 @@
                         <field name="poe"/>
                         <field name="cleaning_co"/>
                         
+                        
                     </group>
                     <group name="documents" string="Documents">
                         <field name="legalized_docs_recieved"/>
                         <field name="legalized_docs_given"/>
+                        <field name="attachment_ids" widget="many2many_binary" class="oe_inline"/>
                         
                         
                         
@@ -109,6 +111,37 @@
                 <field name="state" optional="1" />
             </tree>
         </field>
+        </record>
+
+        <record model="ir.ui.view" id="shipment_management.shipment_shipment_kanban">
+        <field name="name">shipment management kanban</field>
+        <field name="model">shipment.shipment</field>
+        <field name="type">kanban</field>
+        <field name="arch" type="xml">
+                <kanban  class="o_kanban_small_column" on_create="quick_create"> 
+                    <!-- <field name="stage_id" options="{&quot;group_by_tooltip&quot;: {&quot;requirements&quot;: &quot;Description&quot;}}"/> -->
+                    <field name="partner_id"/>
+                    <field name="dispatch_date"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_vignette oe_semantic_html_override">
+                            <!-- <a type="open"><img t-att-src="kanban_image('product.product', 'image_small', record.id.value)" class="oe_kanban_image"/></a> -->
+                            <div class="oe_kanban_details">
+                                <h4>
+                                    <a type="open">
+                                         <t t-if="record.partner_id.raw_value">[<field name="partner_id"/>]</t> 
+                                    </a>
+                                </h4>
+                                <div name="tags"/>
+                                <ul>
+                                    <li>Date <field name="dispatch_date"></field></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+                </kanban>
+            </field>
         </record>
   </data>
 </odoo>

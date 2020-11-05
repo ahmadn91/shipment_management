@@ -4,7 +4,7 @@
     <record model="ir.actions.act_window" id="shipment_management.action_window">
       <field name="name">Create and Manage Shipments</field>
       <field name="res_model">shipment.shipment</field>
-      <field name="view_mode">tree,form</field>
+      <field name="view_mode">kanban,tree,form</field>
     </record>
     
     <!-- Top menu item -->
