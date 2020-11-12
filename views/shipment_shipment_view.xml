@@ -13,50 +13,67 @@
             <field name="state" widget="statusbar" statusbar_visible="active,fulfilled"/>
         </header>
             <sheet>
-                <group>
-                    <group name="logistic_details" string="Logisitc Details">
-                        <field name="partner_id"/>
-                        <field name="dispatch_date"/>
-                        <field name="pallets_cartons"/>
-                        <field name="awb_bol"/>
-                        <field name="poe_arrival_date"/>
-                        <field name="no_of_trucks"/>
-                        <field name="abu_gharib_arrival_Date"/>
-                        <field name="abu_gharib_departure_Date"/>
-                        <field name="poe"/>
-                        <field name="cleaning_co"/>
+                <group >
+                    <group  name="logistic_details" string="Logisitc Details">
+                       
+                            <field name="partner_id"/>
+                            <field name="dispatch_date"/>
+                            <field name="pallets_cartons"/>
+                            <field name="awb_bol"/>
+                            <field name="poe_arrival_date"/>
+                            <field name="no_of_trucks"/>
+                            <field name="abu_gharib_arrival_Date" widget="many2many_tags"/>
+                            <field name="abu_gharib_departure_Date" widget="many2many_tags"/>
+                            <field name="poe"/>
+                            <field name="cleaning_co"/>
+                            <field name="unloading_date_to_truck"/>
                         
                         
+                            <field name="admin_expenses"/>
+                            <field name="shipment_value"/>
+                            <field name="admin_expenses_date"/>
+                            <field name="clearence_company" widget="many2many_tags"/>
+                            <field name="shipping_line"/>
                     </group>
-                    <group name="documents" string="Documents">
-                        <field name="legalized_docs_recieved"/>
-                        <field name="legalized_docs_given"/>
-                        <field name="attachment_ids" widget="many2many_binary" class="oe_inline"/>
-                        
-                        
-                        
+                    <group>
+                            <field name="percentage"/>
+                            <field name="tax_paid"/>
+                            <field name="customs_paid"/>
+                            <field name="total"/>
+                            <field name="total_percentage"/>
+                            <field name="container_dumurrage"/>
+                            <field name="truck_dumurrage"/>
+                            <field name="legalized_docs_recieved"/>
+                            <field name="legalized_docs_given"/>
+                            <field name="legalized_doc_date"/>
+                            <field name="attachment_ids" widget="many2many_binary" class="oe_inline"/>
+                            
                     </group>
-                    <group name="financial_details" string="Financial Details">
-                        <field name="admin_expenses"/>
-                        <field name="shipment_value"/>
-                        <field name="admin_expenses_date"/>
-                        <field name="tc_invoice_number"/>
-                        <field name="tc_invoice_date"/>
-                        <field name="tc_invoice_value"/>
-                        <field name="percentage"/>
-                        <field name="tax_paid"/>
-                        <field name="customs_paid"/>
-                        <field name="total"/>
-                        <field name="total_percentage"/>
-                     </group>   
+                        <group string="TC Invoice">
+                            <field name="tc_invoice">
+                                <tree editable="top">
+                                    <field name="number"/>
+                                    <field name="date"/>
+                                    <field name="value"/>
+                                </tree>
+                            </field>
+                        </group>
+
                 </group>
+                
                 <field name="shipment_line" >
                         <tree editable="top">
                             <field name="invoice"/>
+                            <field name="due_date"/> 
                             <field name="rel_purchase_orders" widget="many2many_tags"/>
+                            <!-- <field name="purchase_orders_ref" /> -->
                             <field name="rel_products" widget="many2many_tags"/>
+                            <field name="qty" widget="many2many_tags"/>
+                            <field name="gross_weight"/>
+                            <field name="shipment_value"/>
                             <field name="warehouse_arr_dates" widget="many2many_tags"/>
                             <field name="licenses" widget="many2many_tags" options="{'no_create': True, 'no_create_edit':True}"/>
+                            <field name="notes"/>
                         </tree>
                 </field>
             </sheet>
@@ -90,9 +107,9 @@
                 <field name="legalized_docs_given"  />
                 <field name="admin_expenses" optional="1" />
                 <field name="admin_expenses_date" optional="1" />
-                <field name="tc_invoice_number" optional="1"  />
+                <!-- <field name="tc_invoice_number" optional="1"  />
                 <field name="tc_invoice_date" optional="1" />
-                <field name="tc_invoice_value" optional="1" />
+                <field name="tc_invoice_value" optional="1" /> -->
                 <field name="percentage" optional="1" />
                 <field name="tax_paid" optional="1" />
                 <field name="customs_paid" optional="1" />
@@ -100,7 +117,7 @@
                 <field name="total_percentage" optional="1" />
                 <field name="admin_expenses" optional="1" />
                 <field name="admin_expenses_date" optional="1" />
-                <field name="tc_invoice_number" optional="1" />
+                <!-- <field name="tc_invoice_number" optional="1" /> -->
                 <field name="tc_invoice_date" optional="1" />
                 <field name="tc_invoice_value" optional="1" />
                 <field name="percentage" optional="1" />

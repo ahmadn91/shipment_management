@@ -10,18 +10,19 @@ class Shipment(models.Model):
     """ Logistic Details """
     partner_id = fields.Many2one("res.partner",string="Vendor",required=True)
     dispatch_date = fields.Date(string="Dispatch Date",required=True)
-    pallets_cartons = fields.Integer(string="Pallets/Cartons")
+    pallets_cartons = fields.Char(string="Pallets/Cartons")
     awb_bol = fields.Integer(string="AWB/BOL")
     poe_arrival_date = fields.Date(string="POE Arrival Date")
     no_of_trucks = fields.Integer(string="Number of Trucks")
     london_notif = fields.Char(string="London Notification")
     legalized_docs_recieved = fields.Char(string="Legalized Docs Recieved")
     legalized_docs_given = fields.Char(string="Legalized Docs given")
-    abu_gharib_arrival_Date = fields.Date(string="Abu Gharib Arrival Date")
-    abu_gharib_departure_Date = fields.Date(string="Abu Gharib Departure Date")
+    abu_gharib_arrival_Date = fields.Many2many(string="Abu Gharib Arrival Date",comodel_name="shipment.dates",relation="abg_arr_dates_rel",column1="shipment_dates_abg_arr",column2="dates_shipment_abg_arr")
+    abu_gharib_departure_Date = fields.Many2many(string="Abu Gharib Departure Date",comodel_name="shipment.dates",relation="abg_dep_dates_rel",column1="shipment_dates_abg_dep",column2="dates_shipment_abg_dep")
     cleaning_co = fields.Char(string="Cleaning Company")
     poe = fields.Many2one('shipment.poe', string='Port of Entry')
     attachment_ids = fields.Many2many('ir.attachment', string='Attachments')
+    clearence_company = fields.Many2many(comodel_name="clearence.company",relation="shipment_clearence_rel",column1="shipment_clearence",column2="clearence_shipment",string="Clearence Company")
 
 
     
@@ -31,25 +32,27 @@ class Shipment(models.Model):
     """ Financial Details """
     admin_expenses = fields.Float(string="Administrative Expenses")
     admin_expenses_date = fields.Date(string="Administrative Expenses Date")
-    tc_invoice_number = fields.Integer(string="TC Invoice Number")
-    tc_invoice_date = fields.Date(string="TC Invoice Date")
-    tc_invoice_value = fields.Integer(string="TC Invoice Value")
+    tc_invoice= fields.Many2many(comodel_name="tc.invoice",relation="tc_shipment_rel",column1="tc_shipment",column2="shipment_tc",string="TC Invoice")
+    tc_invoice_date = fields.Date(string="TC Invoice Date",related="tc_invoice.date")
+    tc_invoice_value = fields.Float(string="TC Invoice Value",related="tc_invoice.value")
     percentage = fields.Float(string="Percentage")
     tax_paid = fields.Float(string="Tax Paid")
     customs_paid = fields.Float(string="Customs Paid")
     total = fields.Float(string="Total")
     total_percentage = fields.Float(string="Total Percentage")
     shipment_value = fields.Float(string="Shipment Value")
-
-
+    container_dumurrage = fields.Float(string="Container Dumurrage")
+    truck_dumurrage = fields.Float(string="Truck Dumurrage")
     state=fields.Selection([("draft","Draft"),("upcoming","Upcoming"),("at airport now","At airpot now"),("arrived in w.h + paid inv.","Arrived in W.H. + paid inv."),("cancelled","Cancelled")],string="Status",default="draft",required=True)
-
+    shipping_line = fields.Char(string="Shipping Line")
+    unloading_date_to_truck = fields.Date(string="Unloading Date to Truck in POE")
+    legalized_doc_date = fields.Date(string="Legalized Docs Collection Date")
     """ Shipment Line Items """
     
     shipment_line = fields.One2many("shipment.invoice","conn",string="Shipment Line Items")
     
     purchase_proxy = fields.Many2many(comodel_name="purchase.order",relation="proxy_purchase_rel",column1="pur_pro",cloumn2="pro_pur",string="Purchase Orders",related="shipment_line.rel_purchase_orders")
-
+    
     
 
     def escalate(self):
@@ -73,11 +76,26 @@ class ShipmentInvoices(models.Model):
     _rec_name="invoice"
     conn = fields.Integer()
     invoice = fields.Many2one("account.move",string="Invoice")
+    due_date = fields.Date(related="invoice.invoice_date_due",string="Invoice Due Date")
     rel_purchase_orders = fields.Many2many(comodel_name="purchase.order",relation="shipment_purchase_rel",column1="shipment_pur",column2="pur_shipment",string="Purchase Orders")
+    # purchase_orders_ref = fields.Char(string="Reference",compute="purchase_reference_calc")
     rel_products = fields.Many2many(comodel_name="product.product",relation="shipment_product_rel",column1="shipment_pro",column2="pro_shipment",string="Related Products")
     warehouse_arr_dates = fields.Many2many(comodel_name="shipment.dates",relation="shipment_dates_rel",column1="shipment_dates",column2="dates_shipment",string="Warehouse Arrival Dates")
     licenses = fields.Many2many("license.license",string="Related Licenses")
+    qty = fields.Many2many("shipment.quant",string="Quantity")
+    gross_weight = fields.Integer(string="Gross Weight")
+    shipment_value = fields.Float(string="Shipment Value")
+    notes=fields.Char(string="notes")
 
+
+    # @api.depends("rel_purchase_orders")
+    # def purchase_reference_calc(self):
+    #     refs=[]
+    #     for item in self:
+    #         for po in item.rel_purchase_orders:
+    #             po_object = self.env["purchase.order"].search([("name","=",po.name)])
+    #             refs.append(po_object.partner_ref)
+    #     self.purchase_orders_ref = '-'.join(refs)
 
 
 class ShipmentLineDates(models.Model):
@@ -95,3 +113,24 @@ class ShipmentPoe(models.Model):
 
 
 
+class ClearenceCompany(models.Model):
+    _name="clearence.company"
+    _rec_name="name"
+
+    name=fields.Char(string="Name")
+
+
+class TcInvoice(models.Model):
+    _name="tc.invoice"
+    _rec_name = "number"
+
+    number = fields.Char(string="Invoice Number")
+    date = fields.Date(string="Invoice Date")
+    value = fields.Float(string="Invoice Value")
+
+
+class ShipmentProductQuantity(models.Model):
+    _name="shipment.quant"
+    _rec_name = "quantity"
+
+    quantity = fields.Integer(string="Quantity")
