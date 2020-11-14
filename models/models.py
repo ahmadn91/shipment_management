@@ -8,7 +8,7 @@ class Shipment(models.Model):
     _inherit = 'mail.thread'
     _rec_name="partner_id"
     """ Logistic Details """
-    partner_id = fields.Many2one("res.partner",string="Vendor",required=True)
+    partner_id = fields.Many2one("res.partner",required=True)
     dispatch_date = fields.Date(string="Dispatch Date",required=True)
     pallets_cartons = fields.Char(string="Pallets/Cartons")
     awb_bol = fields.Integer(string="AWB/BOL")
@@ -35,12 +35,12 @@ class Shipment(models.Model):
     tc_invoice= fields.Many2many(comodel_name="tc.invoice",relation="tc_shipment_rel",column1="tc_shipment",column2="shipment_tc",string="TC Invoice")
     tc_invoice_date = fields.Date(string="TC Invoice Date",related="tc_invoice.date")
     tc_invoice_value = fields.Float(string="TC Invoice Value",related="tc_invoice.value")
-    percentage = fields.Float(string="Percentage")
+    percentage = fields.Float(string="Percentage",compute="calculate_percentage")
     tax_paid = fields.Float(string="Tax Paid")
     customs_paid = fields.Float(string="Customs Paid")
     total = fields.Float(string="Total")
     total_percentage = fields.Float(string="Total Percentage")
-    shipment_value = fields.Float(string="Shipment Value")
+    # shipment_value = fields.Float(string="Shipment Value")
     container_dumurrage = fields.Float(string="Container Dumurrage")
     truck_dumurrage = fields.Float(string="Truck Dumurrage")
     state=fields.Selection([("draft","Draft"),("upcoming","Upcoming"),("at airport now","At airpot now"),("arrived in w.h + paid inv.","Arrived in W.H. + paid inv."),("cancelled","Cancelled")],string="Status",default="draft",required=True)
@@ -54,6 +54,34 @@ class Shipment(models.Model):
     purchase_proxy = fields.Many2many(comodel_name="purchase.order",relation="proxy_purchase_rel",column1="pur_pro",cloumn2="pro_pur",string="Purchase Orders",related="shipment_line.rel_purchase_orders")
     
     
+    @api.constrains("tc_invoice","shipment_line")
+    def calculate_percentage(self):
+        total_tc=0
+        total_shipment=0
+        for item in self.tc_invoice:
+            total_tc+=item.value
+        for item in self.shipment_line:
+            total_shipment += item.shipment_value
+        if total_tc !=0 and total_shipment !=0:
+            self.percentage = total_tc / total_shipment
+
+    @api.constrains("tc_invoice","admin_expenses")
+    def calculate_total(self):
+        total_tc = 0
+        for item in self.tc_invoice:
+            total_tc+=item.value
+        self.total = total_tc + self.admin_expenses
+
+
+    @api.constrains("total","shipment_line")
+    def calc_total_percentage(self):
+        total_shipment=0
+        for item in self.shipment_line:
+            total_shipment += item.shipment_value
+        if self.total !=0 and total_shipment !=0:
+            self.total_percentage = self.total / total_shipment 
+
+        
 
     def escalate(self):
         if self.state =="draft":
