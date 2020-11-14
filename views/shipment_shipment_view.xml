@@ -17,9 +17,7 @@
                 <field name="partner_id" placeholder="Vendor"/>
             </h1>
                 <group>
-                    <group  name="logistic_details" string="Logisitc Details">
-                       
-                            
+                    <group name="logistic_details">
                             <field name="dispatch_date"/>
                             <field name="pallets_cartons"/>
                             <field name="awb_bol"/>
