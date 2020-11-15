@@ -88,6 +88,8 @@ class Shipment(models.Model):
                     total_shipment += item.shipment_value
                 if rcd.total !=0 and total_shipment !=0:
                     rcd.total_percentage = rcd.total / total_shipment 
+                else:
+                    rc.total_percentage = False
 
         
 
