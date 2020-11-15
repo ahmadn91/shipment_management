@@ -67,7 +67,8 @@ class Shipment(models.Model):
                     total_shipment += item.shipment_value
             if total_tc !=0 and total_shipment !=0:
                 rcd.percentage = total_tc / total_shipment
-
+            else:
+                rcd.percentage = False
     @api.constrains("tc_invoice","admin_expenses")
     def calculate_total(self):
         for rcd in self:
