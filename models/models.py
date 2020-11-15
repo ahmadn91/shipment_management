@@ -58,28 +58,34 @@ class Shipment(models.Model):
     def calculate_percentage(self):
         total_tc=0
         total_shipment=0
-        for item in self.tc_invoice:
-            total_tc+=item.value
-        for item in self.shipment_line:
-            total_shipment += item.shipment_value
+        if self.tc_invoice:
+            for item in self.tc_invoice:
+                total_tc+=item.value
+        if self.shipment_line:
+            for item in self.shipment_line:
+                total_shipment += item.shipment_value
         if total_tc !=0 and total_shipment !=0:
             self.percentage = total_tc / total_shipment
 
     @api.constrains("tc_invoice","admin_expenses")
     def calculate_total(self):
-        total_tc = 0
-        for item in self.tc_invoice:
-            total_tc+=item.value
-        self.total = total_tc + self.admin_expenses
+        for rcd in self:
+            total_tc = 0
+            if rcd.tc_invoice:
+                for item in rcd.tc_invoice:
+                    total_tc += item.value
+            rcd.total = total_tc + rcd.admin_expenses
 
 
     @api.constrains("total","shipment_line")
     def calc_total_percentage(self):
-        total_shipment=0
-        for item in self.shipment_line:
-            total_shipment += item.shipment_value
-        if self.total !=0 and total_shipment !=0:
-            self.total_percentage = self.total / total_shipment 
+        for rcd in self:
+            total_shipment=0
+            if rcd.shipment_line:
+                for item in rcd.shipment_line:
+                    total_shipment += item.shipment_value
+                if rcd.total !=0 and total_shipment !=0:
+                    rcd.total_percentage = rcd.total / total_shipment 
 
         
 
