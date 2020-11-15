@@ -1,4 +1,8 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_shipment_management_shipment_management,shipment_management.shipment_management,model_shipment_shipment,base.group_user,1,1,1,1
-access_shipment_management_shipment_invoice,shipment_management.shipment_invoice,model_shipment_invoice,base.group_user,1,1,1,1
-
+access_shipment_shipment,shipment_shipment,model_shipment_shipment,base.group_user,1,1,1,1
+access_shipment_invoice,shipment_invoice,model_shipment_invoice,base.group_user,1,1,1,1
+access_shipment_dates,shipment_dates,model_shipment_dates,base.group_user,1,1,1,1
+access_shipment_poe,shipment_poe,model_shipment_poe,base.group_user,1,1,1,1
+access_clearence_company,clearence_company,model_clearence_company,base.group_user,1,1,1,1
+access_tc_invoice,tc_invoice,model_tc_invoice,base.group_user,1,1,1,1
+access_shipment_quant,shipment_quant,model_shipment_quant,base.group_user,1,1,1,1
