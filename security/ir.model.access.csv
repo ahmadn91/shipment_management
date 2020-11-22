@@ -6,3 +6,4 @@ access_shipment_poe,shipment_poe,model_shipment_poe,base.group_user,1,1,1,1
 access_clearence_company,clearence_company,model_clearence_company,base.group_user,1,1,1,1
 access_tc_invoice,tc_invoice,model_tc_invoice,base.group_user,1,1,1,1
 access_shipment_quant,shipment_quant,model_shipment_quant,base.group_user,1,1,1,1
+access_shipment_awb,shipment_awb,model_shipment_awb,base.group_user,1,1,1,1
