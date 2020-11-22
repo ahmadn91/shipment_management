@@ -10,10 +10,10 @@ class Shipment(models.Model):
     """ Logistic Details """
     partner_id = fields.Many2one("res.partner",required=True)
     dispatch_date = fields.Date(string="Dispatch Date",required=True)
-    pallets_cartons = fields.Char(string="Pallets/Cartons")
-    awb_bol = fields.Integer(string="AWB/BOL")
+    
+    awb_bol = fields.Many2many("shipment.awb",string="AWB/BOL")
     poe_arrival_date = fields.Date(string="POE Arrival Date")
-    no_of_trucks = fields.Integer(string="Number of Trucks")
+    no_of_trucks = fields.Char(string="Number of Trucks")
     london_notif = fields.Char(string="London Notification")
     legalized_docs_recieved = fields.Char(string="Legalized Docs Recieved")
     legalized_docs_given = fields.Char(string="Legalized Docs given")
@@ -47,6 +47,7 @@ class Shipment(models.Model):
     shipping_line = fields.Char(string="Shipping Line")
     unloading_date_to_truck = fields.Date(string="Unloading Date to Truck in POE")
     legalized_doc_date = fields.Date(string="Legalized Docs Collection Date")
+    containers= fields.Char(string="Containers")
     """ Shipment Line Items """
     
     shipment_line = fields.One2many("shipment.invoice","conn",string="Shipment Line Items")
@@ -123,6 +124,7 @@ class ShipmentInvoices(models.Model):
     qty = fields.Many2many("shipment.quant",string="Quantity")
     gross_weight = fields.Integer(string="Gross Weight")
     shipment_value = fields.Float(string="Shipment Value")
+    pallets_cartons = fields.Char(string="Pallets/Cartons")
     notes=fields.Char(string="notes")
 
 
@@ -172,3 +174,9 @@ class ShipmentProductQuantity(models.Model):
     _rec_name = "quantity"
 
     quantity = fields.Integer(string="Quantity")
+
+
+class AwbBol(models.Model):
+    _name="shipment.awb"
+    _rec_name = "number"
+    number = fields.Char(string="AWB/BOL")

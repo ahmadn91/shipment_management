@@ -14,44 +14,44 @@
         </header>
             <sheet>
             <h1>
-                <field name="partner_id" placeholder="Vendor"/>
+                <field name="partner_id" placeholder="Vendor" attrs="{'readonly':[('state','=','cancelled')]}"/>
             </h1>
                 <group>
                     <group name="logistic_details">
-                            <field name="dispatch_date"/>
-                            <field name="pallets_cartons"/>
-                            <field name="awb_bol"/>
-                            <field name="poe_arrival_date"/>
-                            <field name="no_of_trucks"/>
-                            <field name="abu_gharib_arrival_Date" widget="many2many_tags"/>
-                            <field name="abu_gharib_departure_Date" widget="many2many_tags"/>
-                            <field name="poe"/>
-                            <field name="cleaning_co"/>
-                            <field name="unloading_date_to_truck"/>
+                            <field name="dispatch_date" attrs="{'readonly':[('state','=','cancelled')]}"/>
+                            
+                            <field name="awb_bol" widget="many2many_tags" attrs="{'readonly':[('state','=','cancelled')]}"/>
+                            <field name="poe_arrival_date" attrs="{'readonly':[('state','=','cancelled')]}"/>
+                            <field name="no_of_trucks" attrs="{'readonly':[('state','=','cancelled')]}"/>
+                            <field name="abu_gharib_arrival_Date" widget="many2many_tags" attrs="{'readonly':[('state','=','cancelled')]}"/>
+                            <field name="abu_gharib_departure_Date" widget="many2many_tags" attrs="{'readonly':[('state','=','cancelled')]}"/>
+                            <field name="poe" attrs="{'readonly':[('state','=','cancelled')]}"/>
+                            <field name="cleaning_co" attrs="{'readonly':[('state','=','cancelled')]}"/>
+                            <field name="unloading_date_to_truck" attrs="{'readonly':[('state','=','cancelled')]}"/>
                         
                         
-                            <field name="admin_expenses"/>
+                            <field name="admin_expenses" attrs="{'readonly':[('state','=','cancelled')]}"/>
                             <!-- <field name="shipment_value"/> -->
-                            <field name="admin_expenses_date"/>
-                            <field name="clearence_company" widget="many2many_tags"/>
-                            <field name="shipping_line"/>
+                            <field name="admin_expenses_date" attrs="{'readonly':[('state','=','cancelled')]}"/>
+                            <field name="clearence_company" widget="many2many_tags" attrs="{'readonly':[('state','=','cancelled')]}"/>
+                            <field name="shipping_line" attrs="{'readonly':[('state','=','cancelled')]}"/>
                     </group>
                     <group>
-                            <field name="percentage"/>
-                            <field name="tax_paid"/>
-                            <field name="customs_paid"/>
-                            <field name="total"/>
-                            <field name="total_percentage"/>
-                            <field name="container_dumurrage"/>
-                            <field name="truck_dumurrage"/>
-                            <field name="legalized_docs_recieved"/>
-                            <field name="legalized_docs_given"/>
-                            <field name="legalized_doc_date"/>
-                            <field name="attachment_ids" widget="many2many_binary" class="oe_inline"/>
+                            <field name="percentage" attrs="{'readonly':[('state','=','cancelled')]}"/>
+                            <field name="tax_paid" attrs="{'readonly':[('state','=','cancelled')]}"/>
+                            <field name="customs_paid" attrs="{'readonly':[('state','=','cancelled')]}"/>
+                            <field name="total" attrs="{'readonly':[('state','=','cancelled')]}"/>
+                            <field name="total_percentage" attrs="{'readonly':[('state','=','cancelled')]}"/>
+                            <field name="container_dumurrage" attrs="{'readonly':[('state','=','cancelled')]}"/>
+                            <field name="truck_dumurrage" attrs="{'readonly':[('state','=','cancelled')]}"/>
+                            <field name="legalized_docs_recieved" attrs="{'readonly':[('state','=','cancelled')]}"/>
+                            <field name="legalized_docs_given" attrs="{'readonly':[('state','=','cancelled')]}"/>
+                            <field name="legalized_doc_date" attrs="{'readonly':[('state','=','cancelled')]}"/>
+                            <field name="attachment_ids" widget="many2many_binary" class="oe_inline" attrs="{'readonly':[('state','=','cancelled')]}"/>
                             
                     </group>
                         <group string="TC Invoice">
-                            <field name="tc_invoice">
+                            <field name="tc_invoice" attrs="{'readonly':[('state','=','cancelled')]}">
                                 <tree editable="top">
                                     <field name="number"/>
                                     <field name="date"/>
@@ -62,7 +62,7 @@
 
                 </group>
                 
-                <field name="shipment_line" >
+                <field name="shipment_line" attrs="{'readonly':[('state','=','cancelled')]}" >
                         <tree editable="top">
                             <field name="invoice"/>
                             <field name="due_date"/> 
@@ -73,6 +73,7 @@
                             <field name="gross_weight"/>
                             <field name="shipment_value"/>
                             <field name="warehouse_arr_dates" widget="many2many_tags"/>
+                            <field name="pallets_cartons"/>
                             <field name="licenses" widget="many2many_tags" options="{'no_create': True, 'no_create_edit':True}"/>
                             <field name="notes"/>
                         </tree>
@@ -98,7 +99,7 @@
                 <field name="shipment_line" widget="many2many_tags" string="Invoice" />
                 <field name="purchase_proxy" widget="many2many_tags"/>
                 <field name="dispatch_date"/>
-                <field name="pallets_cartons"/>
+                <field name="containers"/>
                 <field name="awb_bol"/>
                 <field name="poe_arrival_date"/>
                 <field name="no_of_trucks"  />
