@@ -9,7 +9,7 @@
     
     <!-- Top menu item -->
 
-    <menuitem name="Shipment Management" id="shipment_management.menu_root"/>
+    <menuitem name="Shipment Management" id="shipment_management.menu_root" web_icon="shipment_management,static/src/img/icon.png"/>
 
     <!-- menu categories -->
 
