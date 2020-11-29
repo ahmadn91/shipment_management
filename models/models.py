@@ -19,7 +19,6 @@ class Shipment(models.Model):
     legalized_docs_given = fields.Char(string="Legalized Docs given")
     abu_gharib_arrival_Date = fields.Many2many(string="Abu Gharib Arrival Date",comodel_name="shipment.dates",relation="abg_arr_dates_rel",column1="shipment_dates_abg_arr",column2="dates_shipment_abg_arr")
     abu_gharib_departure_Date = fields.Many2many(string="Abu Gharib Departure Date",comodel_name="shipment.dates",relation="abg_dep_dates_rel",column1="shipment_dates_abg_dep",column2="dates_shipment_abg_dep")
-    cleaning_co = fields.Char(string="Cleaning Company")
     poe = fields.Many2one('shipment.poe', string='Port of Entry')
     attachment_ids = fields.Many2many('ir.attachment', string='Attachments')
     clearence_company = fields.Many2many(comodel_name="clearence.company",relation="shipment_clearence_rel",column1="shipment_clearence",column2="clearence_shipment",string="Clearence Company")
@@ -78,6 +77,7 @@ class Shipment(models.Model):
                 for item in rcd.tc_invoice:
                     total_tc += item.value
             rcd.total = total_tc + rcd.admin_expenses
+            
 
 
     @api.constrains("total","shipment_line")
@@ -114,8 +114,8 @@ class ShipmentInvoices(models.Model):
     _name="shipment.invoice"
     _rec_name="invoice"
     conn = fields.Integer()
-    invoice = fields.Many2one("account.move",string="Invoice")
-    due_date = fields.Date(related="invoice.invoice_date_due",string="Invoice Due Date")
+    invoice = fields.Char(string="Invoice")
+    due_date = fields.Date(string="Invoice Due Date")
     rel_purchase_orders = fields.Many2many(comodel_name="purchase.order",relation="shipment_purchase_rel",column1="shipment_pur",column2="pur_shipment",string="Purchase Orders")
     # purchase_orders_ref = fields.Char(string="Reference",compute="purchase_reference_calc")
     rel_products = fields.Many2many(comodel_name="product.product",relation="shipment_product_rel",column1="shipment_pro",column2="pro_shipment",string="Related Products")

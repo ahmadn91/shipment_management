@@ -26,7 +26,7 @@
                             <field name="abu_gharib_arrival_Date" widget="many2many_tags" attrs="{'readonly':[('state','=','cancelled')]}"/>
                             <field name="abu_gharib_departure_Date" widget="many2many_tags" attrs="{'readonly':[('state','=','cancelled')]}"/>
                             <field name="poe" attrs="{'readonly':[('state','=','cancelled')]}"/>
-                            <field name="cleaning_co" attrs="{'readonly':[('state','=','cancelled')]}"/>
+                            
                             <field name="unloading_date_to_truck" attrs="{'readonly':[('state','=','cancelled')]}"/>
                         
                         
@@ -63,6 +63,33 @@
                 </group>
                 
                 <field name="shipment_line" attrs="{'readonly':[('state','=','cancelled')]}" >
+                        <form>
+                            <sheet>
+                                <group>
+                                     <field name="invoice"/>
+                                    <field name="due_date"/> 
+                                    <field name="rel_purchase_orders" widget="many2many_tags"/>
+                                    <!-- <field name="purchase_orders_ref" /> -->
+                                    <field name="rel_products" widget="many2many_tags"/>
+                                    <field name="qty" widget="many2many_tags"/>
+                                    <field name="gross_weight"/>
+                                    <field name="shipment_value"/>
+                                    <field name="warehouse_arr_dates" widget="many2many_tags"/>
+                                    <field name="pallets_cartons"/>
+                                    <field name="licenses" widget="many2many_tags" options="{'no_create': True, 'no_create_edit':True}"/>
+                                    <field name="notes"/>
+
+
+
+
+
+
+                                </group>
+
+
+                            </sheet>
+
+                        </form>
                         <tree editable="top">
                             <field name="invoice"/>
                             <field name="due_date"/> 
