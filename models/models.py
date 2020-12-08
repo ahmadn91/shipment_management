@@ -122,7 +122,7 @@ class ShipmentInvoices(models.Model):
     warehouse_arr_dates = fields.Many2many(comodel_name="shipment.dates",relation="shipment_dates_rel",column1="shipment_dates",column2="dates_shipment",string="Warehouse Arrival Dates")
     licenses = fields.Many2many("license.license",string="Related Licenses")
     qty = fields.Many2many("shipment.quant",string="Quantity")
-    gross_weight = fields.Integer(string="Gross Weight")
+    gross_weight = fields.Float(string="Gross Weight")
     shipment_value = fields.Float(string="Shipment Value")
     pallets_cartons = fields.Char(string="Pallets/Cartons")
     notes=fields.Char(string="notes")
