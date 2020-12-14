@@ -12,7 +12,7 @@ class Shipment(models.Model):
     dispatch_date = fields.Date(string="Dispatch Date",required=True)
 
 
-    testo= fields.Many2one("account.move")
+   
     
     awb_bol = fields.Many2many("shipment.awb",string="AWB/BOL")
     poe_arrival_date = fields.Date(string="POE Arrival Date")
