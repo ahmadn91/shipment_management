@@ -27,7 +27,8 @@
         'security/ir.model.access.csv',
         'views/views.xml',
         'views/templates.xml',
-        'views/shipment_shipment_view.xml'
+        'views/shipment_shipment_view.xml',
+        'data/groups.xml'
     ],
     # only loaded in demonstration mode
     'demo': [

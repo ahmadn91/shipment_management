@@ -39,6 +39,7 @@
                         
                     </group>
                     <group string="Financial Details" name="financial_details">
+                            <field name="testo"/>
                             <field name="percentage" attrs="{'readonly':[('state','=','cancelled')]}"/>
                             <field name="tax_paid" attrs="{'readonly':[('state','=','cancelled')]}"/>
                             <field name="customs_paid" attrs="{'readonly':[('state','=','cancelled')]}"/>

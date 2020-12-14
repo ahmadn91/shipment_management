@@ -1,0 +1,11 @@
+<odoo>
+  <data>
+     <record id="shipment_inv_pur_ref_show" model="res.groups">
+      <field name="name">Shipment invoice purchase reference  </field>
+      <field name="category_id" ref="base.module_category_hidden"/>
+      <field name="comment">only the member of this group can use invoice and purchase refrence filter</field>
+
+    </record>
+
+  </data>
+</odoo>

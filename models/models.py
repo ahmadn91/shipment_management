@@ -10,6 +10,9 @@ class Shipment(models.Model):
     """ Logistic Details """
     partner_id = fields.Many2one("res.partner",required=True)
     dispatch_date = fields.Date(string="Dispatch Date",required=True)
+
+
+    testo= fields.Many2one("account.move")
     
     awb_bol = fields.Many2many("shipment.awb",string="AWB/BOL")
     poe_arrival_date = fields.Date(string="POE Arrival Date")
@@ -114,8 +117,8 @@ class ShipmentInvoices(models.Model):
     _name="shipment.invoice"
     _rec_name="invoice"
     conn = fields.Integer()
-    invoice = fields.Char(string="Invoice")
-    due_date = fields.Date(string="Invoice Due Date")
+    invoice = fields.Many2one("account.move",string="Invoice")
+    due_date = fields.Date(related="invoice.invoice_date",string="Invoice Due Date")
     rel_purchase_orders = fields.Many2many(comodel_name="purchase.order",relation="shipment_purchase_rel",column1="shipment_pur",column2="pur_shipment",string="Purchase Orders")
     # purchase_orders_ref = fields.Char(string="Reference",compute="purchase_reference_calc")
     rel_products = fields.Many2many(comodel_name="product.product",relation="shipment_product_rel",column1="shipment_pro",column2="pro_shipment",string="Related Products")
@@ -180,3 +183,42 @@ class AwbBol(models.Model):
     _name="shipment.awb"
     _rec_name = "number"
     number = fields.Char(string="AWB/BOL")
+
+
+
+
+class AccountMoveExt(models.Model):
+    _inherit="account.move"
+
+
+    @api.model
+    def name_get(self):
+        result = []
+        for record in self:
+            if self.env.user.has_group('shipment_management.shipment_inv_pur_ref_show'):
+                record_name = record.ref
+                result.append((record.id, record_name))
+            else:
+                record_name = record.name
+                result.append((record.id, record_name))
+        return result
+
+            
+class PurchaseOrderExt(models.Model):
+
+    _inherit="purchase.order"
+
+
+    @api.model
+    def name_get(self):
+        result = []
+        for record in self:
+            if self.env.user.has_group('shipment_management.shipment_inv_pur_ref_show') :
+                record_name = record.partner_ref
+                result.append((record.id, record_name))
+            else:
+                record_name = record.name
+                result.append((record.id, record_name))
+        return result
+
+
