@@ -214,8 +214,13 @@ class PurchaseOrderExt(models.Model):
         result = []
         for record in self:
             if self.env.user.has_group('shipment_management.shipment_inv_pur_ref_show') :
-                record_name = record.partner_ref
-                result.append((record.id, record_name))
+                if record.partner_ref:
+                    record_name = record.partner_ref
+                    result.append((record.id, record_name))
+                else:
+                    record_name = record.name
+                    result.append((record.id, record_name))
+                    
             else:
                 record_name = record.name
                 result.append((record.id, record_name))
