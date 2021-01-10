@@ -218,7 +218,7 @@ class PurchaseOrderExt(models.Model):
     def name_get(self):
         result = []
         for record in self:
-            if self.env.user.has_group('shipment_management.shipment_inv_pur_ref_show') :
+            if self.env.user.has_group('shipment_management.user') :
                 if record.partner_ref:
                     record_name = record.partner_ref
                     result.append((record.id, record_name))

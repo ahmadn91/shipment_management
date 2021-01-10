@@ -9,22 +9,13 @@
     
     <!-- Top menu item -->
 
-    <menuitem name="Shipment Management" id="shipment_management.menu_root" web_icon="shipment_management,static/src/img/icon.png"/>
+    <menuitem name="Shipment Management" id="shipment_management.menu_root" groups="shipment_management.user"
+    web_icon="shipment_management,static/description/icon.png"/>
 
-    <!-- menu categories -->
-
-    <!-- <menuitem name="Menu 1" id="shipment_management.menu_1" parent="shipment_management.menu_root"/> -->
-<!--
-    <menuitem name="Menu 2" id="shipment_management.menu_2" parent="shipment_management.menu_root"/>
--->
-    <!-- actions -->
 
     <menuitem name="List View" id="shipment_management.menu_1_list" parent="shipment_management.menu_root"
               action="shipment_management.action_window" />
-<!--
-    <menuitem name="Server to list" id="shipment_management" parent="shipment_management.menu_2"
-              action="shipment_management.action_server"/>
-  -->
+
 
   </data>
 </odoo>
