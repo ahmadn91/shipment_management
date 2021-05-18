@@ -191,7 +191,7 @@ class AccountMoveExt(models.Model):
     _inherit="account.move"
 
 
-    @api.model
+#     @api.model
     def name_get(self):
         result = []
         for record in self:
@@ -214,7 +214,7 @@ class PurchaseOrderExt(models.Model):
     _inherit="purchase.order"
 
 
-    @api.model
+#     @api.model
     def name_get(self):
         result = []
         for record in self:
